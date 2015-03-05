@@ -25,4 +25,5 @@
 # Copyright 2015 Sebastian Gerhards, unless otherwise noted.
 #
 class jenkins_job_builder {
+  include jenkins_job_builder::install
 }
