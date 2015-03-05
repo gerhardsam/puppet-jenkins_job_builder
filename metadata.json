@@ -1,0 +1,17 @@
+{
+  "name": "gerhardsam-jenkins_job_builder",
+  "version": "0.1.0",
+  "author": "gerhardsam",
+  "summary": "Install jenkins-job-builder and requirements.",
+  "license": "Apache 2.0",
+  "source": "https://github.com/sgerhards/puppet-jenkins_job_builder",
+  "project_page": "https://github.com/gerhardsam/puppet-jenkins_job_builder",
+  "issues_url": "https://github.com/gerhardsam/puppet-jenkins_job_builder/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 1.0.0"
+    }
+  ]
+}
+

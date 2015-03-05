@@ -1,0 +1,7 @@
+pkg/
+Gemfile.lock
+spec/fixtures/
+.vagrant/
+.bundle/
+.idea/
+*.iml
