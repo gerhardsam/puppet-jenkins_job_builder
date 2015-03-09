@@ -37,22 +37,27 @@ class jenkins_job_builder::install(
 
   ensure_packages('git')
 
+  $repo_name           = 'jenkins-job-builder'
   $download_parent_dir = '/tmp/download'
+  $jjb_repo_path       = "${download_parent_dir}/${repo_name}"
 
-  file { 'jjb download parent dir':
+  $repo_file_paths = [
+    $download_parent_dir,
+    $jjb_repo_path
+  ]
+
+  file { $repo_file_paths:
     ensure => directory,
-    path   => $download_parent_dir,
   }
 
-  $clone_command = "git clone ${jjb_repo_url}"
-  exec { 'clone jenkins-job-builder repo':
-    command => $clone_command,
-    cwd     => '/tmp/download',
-    path    => '/usr/bin:/usr/sbin:/bin',
-    timeout => 600,
-    require => [
-      File['jjb download parent dir'],
-      Package['git']
-    ],
+  vcsrepo { $repo_name:
+    ensure   => present,
+    path     => $jjb_repo_path,
+    provider => git,
+    source   => $jjb_repo_url,
+    require  => [
+      Package['git'],
+      File[$jjb_repo_path],
+    ]
   }
 }
