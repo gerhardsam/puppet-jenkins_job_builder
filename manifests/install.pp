@@ -37,6 +37,8 @@ class jenkins_job_builder::install(
   $jjb_repo_url = $jenkins_job_builder::jjb_repo_url,
   $packages     = [
     'git',
+    'python-setuptools',
+    'python-pip'
   ],
 ) inherits jenkins_job_builder {
 
