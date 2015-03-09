@@ -30,7 +30,7 @@
 # Copyright 2015 Sebastian Gerhards, unless otherwise noted.
 #
 class jenkins_job_builder::install(
-  $jjb_repo_url = 'https://git.openstack.org/openstack-infra/jenkins-job-builder',
+  $jjb_repo_url = $jenkins_job_builder::jjb_repo_url,
 ) inherits jenkins_job_builder {
 
   validate_string($jjb_repo_url)
