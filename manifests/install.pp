@@ -7,6 +7,9 @@
 # [*jjb_repo_url*]
 #   The URL to the repository where the Jenkins Job Builder gets checked out from.
 #
+# [*packages*]
+#   Array of packages which should be installed as prerequisite for jjb installation.
+#
 # === Variables
 #
 # No special variables.
@@ -19,6 +22,7 @@
 #
 #  class { 'jenkins_job_builder::install':
 #    jjb_repo_url => 'https://example.com/jjb-repo',
+#    packages     => ['git'],
 #  }
 #
 # === Authors
@@ -31,11 +35,15 @@
 #
 class jenkins_job_builder::install(
   $jjb_repo_url = $jenkins_job_builder::jjb_repo_url,
+  $packages     = [
+    'git',
+  ],
 ) inherits jenkins_job_builder {
 
   validate_string($jjb_repo_url)
+  validate_array($packages)
 
-  ensure_packages('git')
+  ensure_packages($packages)
 
   $repo_name           = 'jenkins-job-builder'
   $download_parent_dir = '/tmp/download'
