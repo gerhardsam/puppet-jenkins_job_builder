@@ -7,6 +7,12 @@
 # [*jjb_repo_url*]
 #   The URL to the repository where the Jenkins Job Builder gets checked out from.
 #
+# [*packages*]
+#   Array of packages which should be installed as prerequisite for jjb installation.
+#
+# [*pip_packages*]
+#   Array of packages which should be installed via pip as prerequisite for jjb installation.
+#
 # === Variables
 #
 # No special variables.
@@ -30,8 +36,18 @@
 # Copyright 2015 Sebastian Gerhards, unless otherwise noted.
 #
 class jenkins_job_builder(
-  $jjb_repo_url = 'https://git.openstack.org/openstack-infra/jenkins-job-builder',
+  $jjb_repo_url       = 'https://git.openstack.org/openstack-infra/jenkins-job-builder',
+  $packages           = [
+    'git',
+    'python-setuptools',
+    'python-pip'
+  ],
+  $pip_packages       = [
+    'pbr',
+  ],
 ) {
   validate_string($jjb_repo_url)
+  validate_array($packages, $pip_packages)
+
   include jenkins_job_builder::install
 }

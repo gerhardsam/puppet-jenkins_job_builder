@@ -39,14 +39,8 @@
 #
 class jenkins_job_builder::install(
   $jjb_repo_url = $jenkins_job_builder::jjb_repo_url,
-  $packages     = [
-    'git',
-    'python-setuptools',
-    'python-pip'
-  ],
-  $pip_packages = [
-    'pbr',
-  ],
+  $packages     = $jenkins_job_builder::packages,
+  $pip_packages = $jenkins_job_builder::pip_packages,
 ) inherits jenkins_job_builder {
 
   validate_string($jjb_repo_url)
