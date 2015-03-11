@@ -10,6 +10,9 @@
 # [*packages*]
 #   Array of packages which should be installed as prerequisite for jjb installation.
 #
+# [*pip_packages*]
+#   Array of packages which should be installed via pip as prerequisite for jjb installation.
+#
 # === Variables
 #
 # No special variables.
@@ -23,6 +26,7 @@
 #  class { 'jenkins_job_builder::install':
 #    jjb_repo_url => 'https://example.com/jjb-repo',
 #    packages     => ['git'],
+#    pip_packages => ['pbr'],
 #  }
 #
 # === Authors
@@ -40,12 +44,16 @@ class jenkins_job_builder::install(
     'python-setuptools',
     'python-pip'
   ],
+  $pip_packages = [
+    'pbr',
+  ],
 ) inherits jenkins_job_builder {
 
   validate_string($jjb_repo_url)
-  validate_array($packages)
+  validate_array($packages, $pip_packages)
 
   ensure_packages($packages)
+  ensure_packages($pip_packages, { 'provider' => 'pip' } )
 
   $repo_name           = 'jenkins-job-builder'
   $download_parent_dir = '/tmp/download'
