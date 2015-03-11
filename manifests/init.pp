@@ -25,6 +25,10 @@
 # [*group*]
 #   The group of the configuration file and its parent directories.
 #
+# [*jobs_path*]
+#   The path to the jjb jobs definitions.
+#     May be a specific file or a directory containing them.
+#
 # === Variables
 #
 # No special variables.
@@ -64,12 +68,15 @@ class jenkins_job_builder(
   $owner                  = 'root',
   $group                  = 'root',
   $jenkins_url            = 'http://localhost:8080',
+  $jobs_path              = '/var/lib/jenkins/jenkins-jobs-builder',
 ) {
-  validate_string($jjb_repo_url, $configuration_file, $owner, $group)
-  validate_array($packages, $pip_packages, $jjb_config_parent_dirs)
+  validate_string($jjb_repo_url, $configuration_file, $jobs_path)
+  validate_array($packages, $pip_packages)
 
   include jenkins_job_builder::install
   include jenkins_job_builder::config
+  include jenkins_job_builder::service
   Class ['jenkins_job_builder::install'] ->
-  Class ['jenkins_job_builder::config']
+  Class ['jenkins_job_builder::config'] ->
+  Class ['jenkins_job_builder::service']
 }
