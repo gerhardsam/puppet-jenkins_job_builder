@@ -3,7 +3,8 @@ describe 'jenkins_job_builder' do
 
   context 'with defaults for all parameters' do
     it { should contain_class('jenkins_job_builder') }
-    it { should contain_class('jenkins_job_builder::install') }
+    it { should contain_class('jenkins_job_builder::install').that_comes_before('jenkins_job_builder::config') }
+    it { should contain_class('jenkins_job_builder::config') }
   end
 
   context 'packages parameter is not an array' do
