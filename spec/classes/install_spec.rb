@@ -8,7 +8,8 @@ describe 'jenkins_job_builder::install' do
         :ensure => 'directory',
       })
     }
-    it { should contain_vcsrepo('jenkins-job-builder') }
+    it { should contain_vcsrepo('jenkins-job-builder').that_comes_before('Exec[install jjb]') }
+    it { should contain_exec('install jjb') }
   end
 
   context 'with different packages to be installed' do
