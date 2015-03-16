@@ -70,13 +70,14 @@ class jenkins_job_builder::install(
     require  => [
       Package['git'],
       File[$jjb_repo_path],
-    ]
+    ],
+    notify   => Exec['install jjb'],
   }
 
   exec { 'install jjb':
-    command => 'python setup.py install',
-    cwd     => $jjb_repo_path,
-    path    => '/usr/bin',
-    require => Vcsrepo[$repo_name],
+    command     => 'python setup.py install',
+    cwd         => $jjb_repo_path,
+    path        => '/usr/bin',
+    refreshonly => true,
   }
 }
