@@ -52,24 +52,16 @@
 # Copyright 2015 Sebastian Gerhards, unless otherwise noted.
 #
 class jenkins_job_builder(
-  $jjb_repo_url           = 'https://git.openstack.org/openstack-infra/jenkins-job-builder',
-  $packages               = [
-    'git',
-    'python-setuptools',
-    'python-pip'
-  ],
-  $pip_packages           = [
-    'pbr',
-  ],
-  $jjb_config_parent_dirs = [
-    '/etc/jenkins_jobs',
-  ],
-  $configuration_file     = '/etc/jenkins_jobs/jenkins_jobs.ini',
-  $owner                  = 'root',
-  $group                  = 'root',
-  $jenkins_url            = 'http://localhost:8080',
-  $jobs_path              = '/var/lib/jenkins/jenkins-jobs-builder',
-) {
+  $jjb_repo_url           = $jenkins_job_builder::params::jjb_repo_url,
+  $packages               = $jenkins_job_builder::params::packages,
+  $pip_packages           = $jenkins_job_builder::params::pip_packages,
+  $jjb_config_parent_dirs = $jenkins_job_builder::params::jjb_config_parent_dirs,
+  $configuration_file     = $jenkins_job_builder::params::configuration_file,
+  $owner                  = $jenkins_job_builder::params::owner,
+  $group                  = $jenkins_job_builder::params::group,
+  $jenkins_url            = $jenkins_job_builder::params::jenkins_url,
+  $jobs_path              = $jenkins_job_builder::params::jobs_path,
+) inherits jenkins_job_builder::params {
   validate_string($jjb_repo_url, $configuration_file, $jobs_path)
   validate_array($packages, $pip_packages)
 
